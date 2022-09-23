@@ -1,1 +1,1 @@
-web: flask --app main --port 80 run
+web: flask --app main run
