@@ -6,7 +6,7 @@ from flask import abort, request
 from flask import current_app as app
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage
+from linebot.models import MessageEvent, TextMessage, TextSendMessage, events
 
 from src.constant import BotRespType
 from src.line_bot import api_bp
@@ -85,10 +85,17 @@ def line_webhook():
 
 
 @handler.add(MessageEvent, message=TextMessage)
-def handle_message(event):
-    print(type(event))
-    print(event)
+def handle_message(event: events.MessageEvent):
+    msg = event.message.text
+    user_id = event.source.user_id
+    bot_resp: BotRespFactory.BaseResp = BotRespFactory(
+        user_id,
+        msg
+    ).get_instance()
+
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.message.text)
+        TextSendMessage(text=bot_resp.resp())
     )
+
+    return
