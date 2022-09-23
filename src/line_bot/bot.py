@@ -1,6 +1,6 @@
 import http
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from flask import abort, request
 from flask import current_app as app
@@ -44,7 +44,11 @@ class BotRespFactory:
 
     class LastEngagedResp(BaseResp):
         def resp(self):
-            return str(self.last_engaged)
+            if self.last_engaged is None:
+                return 'None'
+            return str(self.last_engaged + timedelta(
+                hours=int(os.getenv('LOCAL_UTC'))
+            ))
 
     class CountResp(BaseResp):
         def resp(self):
