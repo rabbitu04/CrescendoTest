@@ -11,12 +11,16 @@ from linebot.models import MessageEvent, TextMessage, TextSendMessage, events
 from src.constant import BotRespType
 from src.line_bot import api_bp
 
+line_bot_api = LineBotApi(os.getenv('CHANNEL_ACCESS_TOKEN'))
+handler = WebhookHandler(os.getenv('CHANNEL_SECRET'))
+
 
 class BotRespFactory:
     class BaseResp:
         def __init__(self, user_id, msg: str):
             self.user_id = user_id
             self.msg = msg
+            self.line_bot_api = line_bot_api
             self.update_user_record()
 
         def update_user_record(self):
@@ -35,11 +39,12 @@ class BotRespFactory:
 
     class MyNameResp(BaseResp):
         def resp(self):
-            return self.user_id
+            user = self.line_bot_api.get_profile(self.user_id)
+            return user.display_name
 
     class LastEngagedResp(BaseResp):
         def resp(self):
-            return self.last_engaged
+            return str(self.last_engaged)
 
     class CountResp(BaseResp):
         def resp(self):
@@ -60,9 +65,6 @@ class BotRespFactory:
 
     def get_instance(self):
         return self.instance
-
-line_bot_api = LineBotApi(os.getenv('CHANNEL_ACCESS_TOKEN'))
-handler = WebhookHandler(os.getenv('CHANNEL_SECRET'))
 
 
 @api_bp.route('/line-bot-webhook', methods=['POST'])
