@@ -15,7 +15,8 @@ To build your own LINE BOT, follow steps below:
  4. Move into the dir of project by `cd /your_path/CrescendoTest`.
  5. Start a heroku app with command `heroku create`.
  6. Lets set up environment parameters on heroku first. Use<br/>`heroku config:set CHANNEL_SECRET=<YOUR CHANNEL SECRET>`<br/>`heroku config:set CHANNEL_ACCESS_TOKEN=<YOUR CHANNEL ACCESS TOKEN>`<br/>
- The values of parameters are what we got when create the LINE bot.
+ `heroku config:set LOCAL_UTC=<INTEGER of your UTC TIME ZONE>`<br/>
+ The values of parameters are what we got when create the LINE bot, and LOCAL_UTC is optional for you to have local time output with "last engaged" bot command.
  7. It's time to run our bot on heroku. Type<br/>`git push heroku main`<br/> in your cmd tool, it will take a few seconds to build the app.
  8. Open our app on web by `heroku open`. Here we can get our domain name. Add `/hello-world` on the url and we should see "Hello" on the browser. If everything is fine, paste your domain name to "Webhook URL" under https://developers.line.biz/console/channel/_id/messaging-api and add `/api/v1/line-bot-webhook`, turn on "Use webhook" button and disable "Auto-reply messages" below. Now we have our LINE BOT connected.
  9. Time to take a try. You can follow the bot we just create on https://developers.line.biz/console/channel/_id/messaging-api.

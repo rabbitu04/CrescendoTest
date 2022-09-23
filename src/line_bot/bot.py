@@ -47,7 +47,7 @@ class BotRespFactory:
             if self.last_engaged is None:
                 return 'None'
             return str(self.last_engaged + timedelta(
-                hours=int(os.getenv('LOCAL_UTC'))
+                hours=int(os.getenv('LOCAL_UTC', 0))
             ))
 
     class CountResp(BaseResp):
