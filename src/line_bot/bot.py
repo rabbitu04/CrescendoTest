@@ -17,7 +17,7 @@ handler = WebhookHandler(os.getenv('CHANNEL_SECRET'))
 
 class BotRespFactory:
     class BaseResp:
-        def __init__(self, user_id, msg: str):
+        def __init__(self, user_id:str, msg: str):
             self.user_id = user_id
             self.msg = msg
             self.line_bot_api = line_bot_api
@@ -54,7 +54,7 @@ class BotRespFactory:
         def resp(self):
             return self.count
 
-    def __init__(self, user_id, msg: str):
+    def __init__(self, user_id: str, msg: str):
         resp_cls_key = msg.upper()
         resp_cls_key = resp_cls_key.replace(' ', '_')
 
