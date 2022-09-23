@@ -65,7 +65,7 @@ line_bot_api = LineBotApi(os.getenv('CHANNEL_ACCESS_TOKEN'))
 handler = WebhookHandler(os.getenv('CHANNEL_SECRET'))
 
 
-@api_bp.route('/webhook', methods=['POST'])
+@api_bp.route('/line-bot-webhook', methods=['POST'])
 def line_webhook():
     # check request header
     # get X-Line-Signature header value
