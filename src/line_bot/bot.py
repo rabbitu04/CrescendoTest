@@ -1,5 +1,6 @@
-from datetime import datetime
 import http
+import os
+from datetime import datetime
 
 from flask import abort, request
 from flask import current_app as app
@@ -60,8 +61,8 @@ class BotRespFactory:
     def get_instance(self):
         return self.instance
 
-line_bot_api = LineBotApi(app.config.get('CHANNEL_ACCESS_TOKEN'))
-handler = WebhookHandler(app.config.get('CHANNEL_SECRET'))
+line_bot_api = LineBotApi(os.getenv('CHANNEL_ACCESS_TOKEN'))
+handler = WebhookHandler(os.getenv('CHANNEL_SECRET'))
 
 
 @api_bp.route('/webhook', methods=['POST'])
